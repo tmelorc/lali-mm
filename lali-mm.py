@@ -49,7 +49,7 @@ for line in top_box:
     draw.text((x, y), line, font=font, fill=fillcolor)
     current_h += h + pad
 
-current_h, pad = 0.85 * MAX_H, 10
+current_h, pad = 0.80 * MAX_H, 10
 for line in bottom_box:
     w, h = draw.textsize(line, font=font)
     x, y = (MAX_W - w) / 2, current_h
