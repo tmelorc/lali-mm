@@ -11,4 +11,4 @@ So, if you wish to use a constant image, edit the `imageFile` variable in the fi
 
 **input / output**
 
-![input](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![input](lali-mm.jpg)
