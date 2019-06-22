@@ -1,5 +1,5 @@
 # lali-mm
-A Python script to create meme. 
+**A Python script to create meme**
 
 Give permission with `chmod +x lali-mm.py` and run as
 
