@@ -11,4 +11,5 @@ So, if you wish to use a constant image, edit the `imageFile` variable in the fi
 
 **input / output**
 
-![input](lali-mm.jpg)
+![input](lali-mm.jpg)![input](lali-mm-01.jpg)
+
