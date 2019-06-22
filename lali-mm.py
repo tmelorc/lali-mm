@@ -2,12 +2,19 @@
 # -*- coding: utf-8 -*-
 
 from PIL import Image, ImageDraw, ImageFont
-import textwrap
-import os, sys
+import os, sys, textwrap
 
-fillcolor = "white"
-shadowcolor = "black"
-font = ImageFont.truetype("/usr/share/fonts/truetype/ubuntu-font-family/FreeSansBold.ttf", 50)
+if len(sys.argv) == 4:
+    imageFile = sys.argv[-1]
+    if os.path.exists(imageFile):
+        print('creating meme on "%s"' % imageFile)
+    else:
+        print('** either the file "%s" is missing or is not an image' % imageFile)
+else:
+    ''' replace the file below to use as constant input image '''
+    imageFile = "lali-mm.jpg"
+    print('creating meme on "%s"' % imageFile)
+
 
 msg = sys.argv[1:]
 
@@ -16,8 +23,10 @@ bottom_msg = msg[1].decode("utf-8")
 top_box = textwrap.wrap(top_msg, width=25)
 bottom_box = textwrap.wrap(bottom_msg, width=20)
 
+fillcolor = "white"
+shadowcolor = "black"
+font = ImageFont.truetype("/usr/share/fonts/truetype/ubuntu-font-family/FreeSansBold.ttf", 50)
 
-imageFile = "mm-lali.jpg"
 im = Image.open(imageFile)
 MAX_W, MAX_H = im.size
 
@@ -58,9 +67,10 @@ for line in bottom_box:
     current_h += h + pad
 
 num_mm = 1
+prefix = os.path.splitext(imageFile)[0]
 for filename in os.listdir('.'):
-        if filename.startswith("lali-mm") and filename.endswith('.jpg'):
+        if filename.startswith(prefix + '-') and filename.endswith('.jpg'):
             num_mm += 1
 
-im.save('lali-mm-%02d.jpg' % num_mm)
-print('lali-mm-%02d.jpg criado' % num_mm)
+im.save('%s-%02d.jpg' % (prefix, num_mm))
+print('%s-%02d.jpg created' % (prefix, num_mm))
