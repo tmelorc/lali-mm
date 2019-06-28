@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+''' Created by Thiago de Melo '''
 
 from PIL import Image, ImageDraw, ImageFont
 import os, sys, textwrap
@@ -24,15 +25,19 @@ else:
 top_box = textwrap.wrap(top_msg, width=25)
 bottom_box = textwrap.wrap(bottom_msg, width=20)
 
-fillcolor = "white"
-shadowcolor = "black"
-font = ImageFont.truetype("/usr/share/fonts/truetype/ubuntu-font-family/FreeSansBold.ttf", 50)
-
 im = Image.open(imageFile)
 MAX_W, MAX_H = im.size
 
+font_size = int(0.07 * MAX_W)
+
+fillcolor = "white"
+shadowcolor = "black"
+font = ImageFont.truetype("/usr/share/fonts/truetype/ubuntu-font-family/FreeSansBold.ttf", font_size)
+ascent, descent = font.getmetrics()
+# (width, baseline), (offset_x, offset_y) = font.font.getsize(text)
+
 draw = ImageDraw.Draw(im)
-current_h, pad = 0.05 * MAX_H, 10
+current_h, pad = 0.1 * ascent, 0.7 * descent
 
 for line in top_box:
     w, h = draw.textsize(line, font=font)
@@ -50,8 +55,8 @@ for line in top_box:
     draw.text((x, y), line, font=font, fill=fillcolor)
     current_h += h + pad
 
-current_h, pad = 0.85 * MAX_H, 10
-for line in bottom_box:
+current_h, pad = MAX_H - 1.1 * (ascent + descent), 0.7 * descent
+for line in bottom_box[::-1]:
     w, h = draw.textsize(line, font=font)
     x, y = (MAX_W - w) / 2, current_h
     # thin border
@@ -65,15 +70,16 @@ for line in bottom_box:
     draw.text((x-1, y+1), line, font=font, fill=shadowcolor)
     draw.text((x+1, y+1), line, font=font, fill=shadowcolor)
     draw.text((x, y), line, font=font, fill=fillcolor)
-    current_h += h + pad
+    current_h -= (h + pad)
+
 
 num_mm = []
+next_mm = 1
 prefix = os.path.splitext(imageFile)[0]
 for filename in os.listdir('.'):
         if filename.startswith(prefix + '-') and filename.endswith('.jpg'):
             num_mm.append(int(os.path.splitext(filename.split(prefix + '-')[1])[0]))
-            print filename
-next_mm = max(num_mm)+1
+            next_mm = max(num_mm)+1
 
 im.save('%s-%02d.jpg' % (prefix, next_mm))
 print('creating meme from "%s" and saved on "%s-%02d.jpg"' % (imageFile, prefix, next_mm))
