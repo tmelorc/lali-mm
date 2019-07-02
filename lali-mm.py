@@ -81,5 +81,7 @@ for filename in os.listdir('.'):
             num_mm.append(int(os.path.splitext(filename.split(prefix + '-')[1])[0]))
             next_mm = max(num_mm)+1
 
+if MAX_W > 300:
+    im.thumbnail((300, 400), Image.ANTIALIAS)
 im.save('%s-%02d.jpg' % (prefix, next_mm))
 print('creating meme from "%s" and saved on "%s-%02d.jpg"' % (imageFile, prefix, next_mm))
